@@ -1,3 +1,4 @@
+@import url(global.scss);
 * {
   padding: 0;
   margin: 0;
@@ -24,12 +25,17 @@ h2 {
 }
 
 a {
+  color: #000;
   text-decoration: none;
 }
 body {
   background-color: #ffdf8c;
 }
+
 .App {
-  margin: 10px;
+  margin: 4vw 5vw;
+  padding: 0 20px 30px;
+  border-radius: 20px;
   background-color: white;
+  min-width: 300px;
 }

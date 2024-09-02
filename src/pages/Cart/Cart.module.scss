@@ -1,0 +1,89 @@
+.cart {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.top {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  flex: 1;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+
+  svg {
+    position: relative;
+    top: -2px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    path {
+      stroke: #111;
+      stroke-width: 1.9;
+    }
+  }
+}
+
+.bottom {
+  margin: 50px 0;
+
+  .details {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      font-size: 22px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+
+    .goBackBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 210px;
+
+      border-color: darken($color: #f6f6f6, $amount: 10);
+
+      span {
+        color: darken($color: #f6f6f6, $amount: 20);
+        font-weight: 500;
+        font-weight: 600;
+      }
+
+      &:hover {
+        background-color: darken($color: #f6f6f6, $amount: 90);
+        border-color: darken($color: #f6f6f6, $amount: 90);
+
+        span {
+          color: #f6f6f6;
+        }
+      }
+
+      svg {
+        margin-right: 12px;
+        path {
+          fill: transparent;
+          stroke-width: 2;
+        }
+      }
+    }
+
+    .payBtn {
+      font-size: 16px;
+      font-weight: 600;
+      width: 210px;
+      padding: 16px;
+    }
+  }
+}

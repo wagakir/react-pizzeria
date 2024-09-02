@@ -1,4 +1,56 @@
 .header {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  min-height: 100px;
+  justify-content: space-between;
+  border-bottom: solid 2px #bdbdbd;
+  padding: 40px 0;
+}
+@media (max-width: 590px) {
+  .header {
+    justify-content: center;
+  }
+}
+.logo {
+  align-self: start;
+  align-items: center;
+  padding: 5px;
+  margin: 10px 5px;
+
+  display: flex;
+  img {
+    margin: 0 10px;
+  }
+  h2 {
+    text-align: center;
+    font-weight: 900;
+  }
+  h4 {
+    text-align: center;
+    font-weight: 500;
+  }
+}
+.cart {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #fe5f1e;
+  padding: 0 20px;
+  margin: 10px 40px;
+  border: 2px solid #fe5f1e;
+  border-radius: 60px;
+  div {
+    height: 30px;
+    border-left: solid 1px #ffffffbd;
+  }
+  svg {
+    height: 20px;
+    width: 20px;
+    margin: 0 5px;
+  }
+  h3 {
+    margin: 5px;
+    color: #ffffff;
+  }
 }

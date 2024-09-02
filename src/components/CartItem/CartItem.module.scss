@@ -1,0 +1,92 @@
+.item {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #f6f6f6;
+  padding-top: 30px;
+  margin-top: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.img {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+
+  img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h3 {
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    font-size: 18px;
+    color: #8d8d8d;
+  }
+}
+.space {
+  flex: 1;
+}
+.info {
+  align-items: center;
+  display: flex;
+  min-width: 100px;
+  flex-wrap: wrap;
+
+  div {
+    padding: 5px;
+    @media (max-width: 400px) {
+      h2 {
+        font-size: 1em;
+      }
+    }
+    span {
+      height: 20px;
+    }
+    b {
+      font-weight: bold;
+      font-size: 30px;
+      letter-spacing: 0.01em;
+    }
+  }
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove {
+  svg {
+    transform: rotate(45deg);
+
+    path {
+      fill: darken($color: #f6f6f6, $amount: 15);
+    }
+  }
+
+  button {
+    svg {
+      width: 11.5px;
+      height: 11.5px;
+      position: relative;
+    }
+    &:hover,
+    &:active {
+      border-color: darken($color: #f6f6f6, $amount: 80);
+      background-color: darken($color: #f6f6f6, $amount: 80);
+    }
+  }
+}

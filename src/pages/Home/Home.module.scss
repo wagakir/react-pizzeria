@@ -1,0 +1,24 @@
+.items {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: space-around;
+  justify-items: center;
+  column-gap: 30px;
+  row-gap: 40px;
+  margin: 0;
+}
+.title {
+  margin: 10px 20px;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 50px;
+  letter-spacing: 0.01em;
+}
+.top {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
