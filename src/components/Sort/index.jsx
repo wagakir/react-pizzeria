@@ -1,20 +1,19 @@
 import React from "react";
 import styles from "./Sort.module.scss";
-const Sort = (props) => {
-  const [open, setOpen] = React.useState(false);
-  const list = ["популярности", "цене", "алфавиту"];
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const onClickCategory = (num) => {
-    setActiveIndex(num);
-  };
-  const onClickSort = (index) => {
-    setOpen((val) => !val);
-    onClickCategory(index);
-  };
+const Sort = ({
+  openSort,
+  setOpenSort,
+  list,
+  activeSortProperty,
+  onClickSort,
+  sortDesc,
+  setSortDesc,
+}) => {
   return (
     <div className={styles.sort}>
-      <div className={styles.label} onClick={() => setOpen((val) => !val)}>
+      <div className={styles.label}>
         <svg
+          onClick={() => setSortDesc((val) => !val)}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -26,19 +25,21 @@ const Sort = (props) => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
-        <span>{list[activeIndex]}</span>
+        <b onClick={() => setOpenSort((val) => !val)}>Сортировка по:</b>
+        <span onClick={() => setOpenSort((val) => !val)}>
+          {list[activeSortProperty].name}
+        </span>
       </div>
-      {open && (
+      {openSort && (
         <div className={styles.popup}>
           <ul>
             {list.map((title, index) => (
               <li
                 key={index}
-                className={activeIndex === index ? "active" : ""}
+                className={activeSortProperty === index ? "active" : ""}
                 onClick={() => onClickSort(index)}
               >
-                {title}
+                {title.name}
               </li>
             ))}
           </ul>

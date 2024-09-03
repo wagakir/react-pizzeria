@@ -1,10 +1,9 @@
 import React from "react";
 import styles from "./Categories.module.scss";
-const Categories = (props) => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const onClickCategory = (num) => {
-    setActiveIndex(num);
-  };
+const Categories = ({ activeCategory, setActiveCategory }) => {
+  // const onClickCategory = (num) => {
+  //   num);
+  // };
 
   const categoriesArray = [
     "Все",
@@ -20,8 +19,8 @@ const Categories = (props) => {
         {categoriesArray.map((title, index) => (
           <li
             key={index}
-            className={activeIndex === index ? "active" : ""}
-            onClick={() => onClickCategory(index)}
+            className={activeCategory === index ? "active" : ""}
+            onClick={() => setActiveCategory(index)}
           >
             {title}
           </li>
