@@ -36,13 +36,15 @@ const Home = (props) => {
     const pizzaResponse = await axios.get(
       `http://localhost:3020/pizza?_sort=${
         list[activeSortProperty].sortProperty
-      }${sortDesc ? "_order=desc" : ""}${
-        activeCategory ? "&category=" + activeCategory : ""
-      }`
+      }${activeCategory ? "&category=" + activeCategory : ""}`
     );
-
+    //ну неполучается с json серваком просто вставить &_order=desc и реверснуть список
+    if (activeCategory) {
+      setPizzaArray(pizzaResponse.data.reverce());
+    } else {
+      setPizzaArray(pizzaResponse.data);
+    }
     await delay(300);
-    setPizzaArray(pizzaResponse.data);
   };
   React.useEffect(() => {
     getPizza();
