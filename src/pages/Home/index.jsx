@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Categories from "../../components/Categories";
@@ -7,48 +7,65 @@ import PizzaBlock from "../../components/PizzaBlock";
 import PizzaLoader from "../../components/PizzaLoader";
 import styles from "./Home.module.scss";
 import Sort from "../../components/Sort";
+import Pagination from "../../components/Pagination";
 
 // сортирвока json server  /pizza?_sort=price_order=desc где _order=desc реверсия списка
-const Home = (props) => {
+const Home = ({ searchValue }) => {
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 2;
+  const endOffset = itemOffset + itemsPerPage;
   //sort logic
-  const [openSort, setOpenSort] = React.useState(false);
+  const [openSort, setOpenSort] = useState(false);
   const list = [
     { name: "популярности", sortProperty: "rating" },
     { name: "цене", sortProperty: "price" },
     { name: "алфавиту", sortProperty: "title" },
   ];
-  const [sortDesc, setSortDesc] = React.useState(false);
-  const [activeSortProperty, setActiveSortProperty] = React.useState(0);
+  const [preResponsePizza, setPreResponsePizza] = useState([]);
+  const [sortDesc, setSortDesc] = useState(false);
+  const [activeSortProperty, setActiveSortProperty] = useState(0);
   const onClickSort = (index) => {
     setOpenSort((val) => !val);
     setActiveSortProperty(index);
   };
   //category logic
-  const [activeCategory, setActiveCategory] = React.useState(0);
+  const [activeCategory, setActiveCategory] = useState(0);
   const delay = (ms) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve(), ms);
     });
   };
-  const [pizzaArray, setPizzaArray] = React.useState([]);
-  const getPizza = async () => {
-    setPizzaArray([...new Array(10)]);
-    const pizzaResponse = await axios.get(
-      `http://localhost:3020/pizza?_sort=${
-        list[activeSortProperty].sortProperty
-      }${activeCategory ? "&category=" + activeCategory : ""}`
-    );
-    //ну неполучается с json серваком просто вставить &_order=desc и реверснуть список
-    if (activeCategory) {
-      setPizzaArray(pizzaResponse.data.reverce());
-    } else {
-      setPizzaArray(pizzaResponse.data);
-    }
-    await delay(300);
-  };
-  React.useEffect(() => {
+  const [pizzaArray, setPizzaArray] = useState([]);
+
+  useEffect(() => {
+    const getPizza = async () => {
+      try {
+        setPizzaArray([...new Array(10)]);
+        await delay(200);
+        const pizzaResponse = await axios.get(
+          `http://localhost:3020/pizza?_sort=${
+            list[activeSortProperty].sortProperty + sortDesc && "&_order=desc"
+          }${sortDesc ? "&_order=desc" : ""}${
+            searchValue ? "&q=" + searchValue : ""
+          }${activeCategory ? "&category=" + activeCategory : ""}
+          `
+        );
+        console.log(endOffset);
+        //ну неполучается с json серваком просто вставить &_order=desc и реверснуть список
+        setPizzaArray(pizzaResponse.data.slice(itemOffset, endOffset));
+      } catch {
+        console.error();
+      }
+    };
     getPizza();
-  }, [activeCategory, activeSortProperty, sortDesc]);
+  }, [
+    activeCategory,
+    activeSortProperty,
+    sortDesc,
+    searchValue,
+    endOffset,
+    itemOffset,
+  ]);
 
   return (
     <div>
@@ -79,6 +96,13 @@ const Home = (props) => {
           )
         )}
       </div>
+      <Pagination
+        items={pizzaArray}
+        itemsPerPage={itemsPerPage}
+        itemOffset={itemOffset}
+        setItemOffset={(obj) => setItemOffset(obj)}
+        endOffset={endOffset}
+      />
     </div>
   );
 };

@@ -1,24 +1,45 @@
 import React from "react";
 import styles from "./Search.module.scss";
-const Seacrh = (props) => {
+const Seacrh = ({ searchValue, setSearchValue }) => {
+  const root = React.useRef(null);
+
   // <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
   return (
-    <div className={styles.root}>
-      <input placeholder="Поиск пицц ..." />
+    <div ref={root} className={styles.root}>
       <svg
-        // enable-background="new 0 0 32 32"
-        id="Glyph"
-        version="1.1"
-        viewBox="0 0 32 32"
-        // xml:space="preserve"
         xmlns="http://www.w3.org/2000/svg"
-        // xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="-2px"
+        y="-2px"
+        width="23"
+        height="23"
+        viewBox="0 0 48 48"
+        fill="#000"
       >
-        <path
-          d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z"
-          id="XMLID_223_"
-        />
+        <path d="M 20.5 6 C 12.509634 6 6 12.50964 6 20.5 C 6 28.49036 12.509634 35 20.5 35 C 23.956359 35 27.133709 33.779044 29.628906 31.75 L 39.439453 41.560547 A 1.50015 1.50015 0 1 0 41.560547 39.439453 L 31.75 29.628906 C 33.779044 27.133709 35 23.956357 35 20.5 C 35 12.50964 28.490366 6 20.5 6 z M 20.5 9 C 26.869047 9 32 14.130957 32 20.5 C 32 23.602612 30.776198 26.405717 28.791016 28.470703 A 1.50015 1.50015 0 0 0 28.470703 28.791016 C 26.405717 30.776199 23.602614 32 20.5 32 C 14.130953 32 9 26.869043 9 20.5 C 9 14.130957 14.130953 9 20.5 9 z"></path>
       </svg>
+      <input
+        onChange={(event) => setSearchValue(event.target.value)}
+        value={searchValue}
+        placeholder="Поиск пицц ..."
+        onFocus={() =>
+          (root.current.style = "border: 2px solid rgba(0, 0, 0, 0.6);")
+        }
+        onBlur={() =>
+          (root.current.style = "border: 2px solid rgba(0, 0, 0, 0.2);")
+        }
+      />
+      {searchValue && (
+        <svg
+          onClick={() => setSearchValue("")}
+          fill="#000000"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+        >
+          <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z" />
+        </svg>
+      )}
     </div>
   );
 };
