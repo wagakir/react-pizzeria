@@ -8,15 +8,11 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 function App() {
-  const [searchValue, setSearchValue] = React.useState("");
   return (
     <div className="App">
-      <Header
-        searchValue={searchValue}
-        setSearchValue={(val) => setSearchValue(val)}
-      />
+      <Header />
       <Routes>
-        <Route path="/" element={<Home searchValue={searchValue}></Home>} />
+        <Route path="/" element={<Home></Home>} />
         <Route path="/cart" element={<Cart></Cart>} />
         <Route path="*" element={<NotFound></NotFound>} />
       </Routes>

@@ -1,19 +1,29 @@
 import React from "react";
 import styles from "./Sort.module.scss";
-const Sort = ({
-  openSort,
-  setOpenSort,
-  list,
-  activeSortProperty,
-  onClickSort,
-  sortDesc,
-  setSortDesc,
-}) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setSortProperty, setSortDesc } from "../../redux/slices/filterSlice";
+
+const Sort = () => {
+  const [openSort, setOpenSort] = React.useState(false);
+  const list = [
+    { name: "популярности", property: "rating" },
+    { name: "цене", property: "price" },
+    { name: "алфавиту", property: "title" },
+  ];
+
+  const dispatch = useDispatch();
+  const sortDesc = useSelector((state) => state.filter.sortDesc);
+  const sortProperty = useSelector((state) => state.filter.sortProperty);
+  const onClickSort = (index) => {
+    setOpenSort((val) => !val);
+    dispatch(setSortProperty(list[index]));
+  };
+
   return (
     <div className={styles.sort}>
       <div className={styles.label}>
         <svg
-          onClick={() => setSortDesc((val) => !val)}
+          onClick={() => dispatch(setSortDesc())}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -27,7 +37,7 @@ const Sort = ({
         </svg>
         <b onClick={() => setOpenSort((val) => !val)}>Сортировка по:</b>
         <span onClick={() => setOpenSort((val) => !val)}>
-          {list[activeSortProperty].name}
+          {sortProperty.name}
         </span>
       </div>
       {openSort && (
@@ -36,7 +46,7 @@ const Sort = ({
             {list.map((title, index) => (
               <li
                 key={index}
-                className={activeSortProperty === index ? "active" : ""}
+                className={sortProperty === index ? "active" : ""}
                 onClick={() => onClickSort(index)}
               >
                 {title.name}

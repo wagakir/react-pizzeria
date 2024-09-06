@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import Seacrh from "../Search";
-const Header = ({ searchValue, setSearchValue }) => {
+const Header = () => {
   return (
     <header className={styles.header}>
       <NavLink to="/">
@@ -14,10 +14,7 @@ const Header = ({ searchValue, setSearchValue }) => {
           </div>
         </div>
       </NavLink>
-      <Seacrh
-        searchValue={searchValue}
-        setSearchValue={(val) => setSearchValue(val)}
-      />
+      <Seacrh />
       <NavLink to="cart">
         <div className={styles.cart}>
           <h3>420 p</h3>
