@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
 import { useSelector } from "react-redux";
 import Categories from "../../components/Categories";
 // import pizzaArrayJson from "../../assets/pizzaArray.json";
@@ -52,8 +53,6 @@ const Home = () => {
           `
         );
         await setPizzaArray(pizzaResponse.data);
-
-        //ну неполучается с json серваком просто вставить &_order=desc и реверснуть список
         setPizzaArrayToRender(pizzaResponse.data.slice(itemOffset, endOffset));
       } catch {
         console.error();

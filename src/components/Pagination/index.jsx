@@ -30,16 +30,20 @@ const Pagination = ({
   };
   return (
     <>
-      <ReactPaginate
-        className={styles.root}
-        breakLabel="..."
-        nextLabel=">"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        pageCount={pageCount}
-        previousLabel="<"
-        renderOnZeroPageCount={null}
-      />
+      {pageCount > 1 ? (
+        <ReactPaginate
+          className={styles.root}
+          breakLabel="..."
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={pageCount}
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
