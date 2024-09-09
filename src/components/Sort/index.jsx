@@ -2,27 +2,37 @@ import React from "react";
 import styles from "./Sort.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortProperty, setSortDesc } from "../../redux/slices/filterSlice";
-
+export const sortList = [
+  { name: "популярности", property: "rating" },
+  { name: "цене", property: "price" },
+  { name: "алфавиту", property: "title" },
+];
 const Sort = () => {
   const [openSort, setOpenSort] = React.useState(false);
-  const list = [
-    { name: "популярности", property: "rating" },
-    { name: "цене", property: "price" },
-    { name: "алфавиту", property: "title" },
-  ];
-
+  const sortRef = React.useRef(null);
   const dispatch = useDispatch();
   const sortDesc = useSelector((state) => state.filter.sortDesc);
   const sortProperty = useSelector((state) => state.filter.sortProperty);
   const onClickSort = (index) => {
     setOpenSort((val) => !val);
-    dispatch(setSortProperty(list[index]));
+    dispatch(setSortProperty(sortList[index]));
   };
-
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!sortRef.current.contains(event.target)) {
+        setOpenSort(false);
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   return (
-    <div className={styles.sort}>
+    <div ref={sortRef} className={styles.sort}>
       <div className={styles.label}>
         <svg
+          {...(sortDesc ? "className=styles.rotate" : "")}
           onClick={() => dispatch(setSortDesc())}
           width="10"
           height="6"
@@ -43,7 +53,7 @@ const Sort = () => {
       {openSort && (
         <div className={styles.popup}>
           <ul>
-            {list.map((title, index) => (
+            {sortList.map((title, index) => (
               <li
                 key={index}
                 className={sortProperty === index ? "active" : ""}

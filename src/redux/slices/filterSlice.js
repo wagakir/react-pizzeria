@@ -23,11 +23,23 @@ export const filterSlice = createSlice({
     setSortDesc: (state) => {
       state.sortDesc = !state.sortDesc;
     },
+    setFilters: (state, action) => {
+      console.log(action.payload);
+      // state.searchValue = action.payload.searchValue;
+      state.category = action.payload.category;
+      state.sortProperty = action.payload.sortProperty;
+      state.sortDesc = action.payload.sortDesc;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setSearchValue, setCategory, setSortProperty, setSortDesc } =
-  filterSlice.actions;
+export const {
+  setSearchValue,
+  setCategory,
+  setSortProperty,
+  setSortDesc,
+  setFilters,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

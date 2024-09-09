@@ -7,6 +7,7 @@
 
   svg {
     margin-right: 8px;
+    transition: all 0.5s ease-in-out;
   }
 
   b {
@@ -47,4 +48,7 @@
       }
     }
   }
+}
+.rotate {
+  transform: rotate(180deg);
 }
