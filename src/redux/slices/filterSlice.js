@@ -24,7 +24,6 @@ export const filterSlice = createSlice({
       state.sortDesc = !state.sortDesc;
     },
     setFilters: (state, action) => {
-      console.log(action.payload);
       // state.searchValue = action.payload.searchValue;
       state.category = action.payload.category;
       state.sortProperty = action.payload.sortProperty;

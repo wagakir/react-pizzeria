@@ -79,9 +79,9 @@ const Home = () => {
   // отравляем запрос на получение  массива пицц и сохраняем его в стейт
   useEffect(() => {
     //измеряем размер окна и считаем сколько пицц рендерить чтоб была одна строка
-    if (Math.ceil(Number(itemsWrapper.current.offsetWidth) / 250) > 3) {
+    if (Math.floor(Number(itemsWrapper.current.offsetWidth) / 280) > 3) {
       setItemsPerPage(
-        Math.ceil(Number(itemsWrapper.current.offsetWidth) / 250)
+        Math.floor(Number(itemsWrapper.current.offsetWidth) / 280)
       );
     } else {
       setItemsPerPage(4);

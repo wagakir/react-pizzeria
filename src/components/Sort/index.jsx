@@ -32,7 +32,7 @@ const Sort = () => {
     <div ref={sortRef} className={styles.sort}>
       <div className={styles.label}>
         <svg
-          {...(sortDesc ? "className=styles.rotate" : "")}
+          className={sortDesc ? styles.rotate : ""}
           onClick={() => dispatch(setSortDesc())}
           width="10"
           height="6"

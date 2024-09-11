@@ -2,29 +2,34 @@
   ul {
     flex-wrap: wrap;
     display: flex;
+  }
+}
+.selected {
+  color: #050202;
+  background: #fe5f1e;
+  padding: 13px 30px;
+  border-radius: 30px;
+  margin: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+  // @include noselect();
 
-    li {
-      background-color: #f9f9f9;
-      padding: 13px 30px;
-      border-radius: 30px;
-      margin: 5px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.1s ease-in-out;
-      // @include noselect();
+  &:hover {
+    background-color: darken(#d7d7d7, 2%);
+  }
+}
+.unSelected {
+  background-color: #f9f9f9;
+  padding: 13px 30px;
+  border-radius: 30px;
+  margin: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+  // @include noselect();
 
-      &:hover {
-        background-color: darken(#d7d7d7, 2%);
-      }
-
-      &:active {
-        background-color: darken(#f9f9f9, 5%);
-      }
-
-      &.active {
-        background-color: #282828;
-        color: #fff;
-      }
-    }
+  &:hover {
+    background-color: darken(#d7d7d7, 2%);
   }
 }
