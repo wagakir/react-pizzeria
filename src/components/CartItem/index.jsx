@@ -1,38 +1,52 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styles from "./CartItem.module.scss";
-const CartItem = (props) => {
+import {
+  addItem,
+  removeItem,
+  incrementItem,
+} from "../../redux/slices/cartSlice";
+const CartItem = ({ count, price, title, imageUrl, type, size, id }) => {
+  const dispatch = useDispatch();
+  const onClickPlus = () => {
+    dispatch(addItem({ id }));
+  };
+  const onClickMinus = () => {
+    dispatch(incrementItem({ id }));
+  };
+  const onClickRemove = () => {
+    dispatch(removeItem(id));
+  };
   return (
     <div className={styles.item}>
       <div className={styles.img}>
-        <img
-          className="pizza-block__image"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          alt="Pizza"
-        />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
       <div className={styles.title}>
-        <h3>Сырный цыпленок</h3>
-        <p>тонкое тесто, 26 см.</p>
+        <h3>{title}</h3>
+        <p>
+          {type}, {size} см.
+        </p>
       </div>
       <div className={styles.space}></div>
       <ul className={styles.info}>
-        <div className={"button outline circle"}>
+        <div className={"button outline circle"} onClick={onClickMinus}>
           <b>-</b>
         </div>
 
         <div>
-          <h2>2</h2>
+          <h2>{count}</h2>
         </div>
 
-        <div className={"button outline circle"}>
+        <div className={"button outline circle"} onClick={onClickPlus}>
           <b>+</b>
         </div>
 
         <div>
-          <h2>770 ₽</h2>
+          <h2>{price * count} ₽</h2>
         </div>
 
-        <div className={styles.remove}>
+        <div className={styles.remove} onClick={onClickRemove}>
           <div className="button outline circle">
             <svg
               width="10"

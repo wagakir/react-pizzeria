@@ -14,19 +14,24 @@ const Categories = () => {
   const dispatch = useDispatch();
 
   // const onClickCategory = (num) => {
-  //   dispatch(setActiveCategory(num));
-  // };
+  // //   dispatch(setActiveCategory(num));
+  // // };
+
   const category = useSelector((state) => state.filter.category);
 
   // const category = useSelector((state) => state.filter.category);
-  console.log(category);
+  // console.log(category);
 
   return (
     <div className={styles.categories}>
       <ul>
         {categoriesArray.map((title, index) => (
           <li
-            className={category === index ? styles.selected : styles.unSelected}
+            className={
+              Number(category) === Number(index)
+                ? styles.selected
+                : styles.unSelected
+            }
             key={index}
             onClick={() => dispatch(setCategory(index))}
           >

@@ -1,8 +1,10 @@
 import React from "react";
 import CartItem from "../../components/CartItem";
 import styles from "./Cart.module.scss";
+import { useSelector } from "react-redux";
 
 const Cart = (props) => {
+  const { items, totalPrice } = useSelector((state) => state.cart);
   return (
     <div className={styles.cart}>
       <div className={styles.top}>
@@ -80,9 +82,9 @@ const Cart = (props) => {
         </div>
       </div>
       <div>
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {items
+          ? items.map((obj, index) => <CartItem {...obj} key={index} />)
+          : ""}
       </div>
       <div className={styles.bottom}>
         <div className={styles.details}>
@@ -90,7 +92,7 @@ const Cart = (props) => {
             Всего пицц: <b>3 шт.</b>
           </span>
           <span>
-            Сумма заказа: <b>900 ₽</b>
+            Сумма заказа: <b>{totalPrice} ₽</b>
           </span>
         </div>
         <div className={styles.buttons}>

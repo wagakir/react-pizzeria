@@ -2,7 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import Seacrh from "../Search";
+import { useSelector } from "react-redux";
 const Header = () => {
+  const { items, totalPrice } = useSelector((state) => state.cart);
+  // let totalCount = 0;
+  // if (items) {
+  const totalCount = items.reduce((sum, obj) => sum + obj.count, 0);
+  // }else()
   return (
     <header className={styles.header}>
       <NavLink to="/">
@@ -17,7 +23,7 @@ const Header = () => {
       <Seacrh />
       <NavLink to="cart">
         <div className={styles.cart}>
-          <h3>420 p</h3>
+          <h3>{totalPrice} ₽</h3>
           <div></div>
           <svg
             width="20"
@@ -48,7 +54,7 @@ const Header = () => {
               strokeLinejoin="round"
             ></path>
           </svg>
-          <h3>3</h3>
+          <h3>{totalCount}</h3>
         </div>
       </NavLink>
     </header>
