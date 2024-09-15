@@ -12,17 +12,18 @@ const PizzaBlock = ({
   price,
   category,
   rating,
+  typesNames,
 }) => {
-  const sizeTypes = [26, 30, 40];
-  const typesNames = ["тонкое", "традиционное"];
+  // const sizeTypes = [26, 30, 40];
+  const typesTest = [" тонкое", "традицион  ное"];
   const onClickAdd = () => {
     const item = {
       id,
       title,
       price,
       imageUrl,
-      type: typesNames[activeIndexType],
-      size: sizeTypes[activeIndexSize],
+      type: typesTest[activeIndexType],
+      size: sizes[activeIndexSize],
     };
     dispatch(addItem(item));
   };
@@ -46,7 +47,7 @@ const PizzaBlock = ({
               className={activeIndexType === index ? styles.active : ""}
               onClick={() => setActiveIndexType(index)}
             >
-              {typesNames[type]}
+              {type}
             </li>
           ))}
         </ul>
