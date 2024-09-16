@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
 import Categories from "../../components/Categories";
 // import pizzaArrayJson from "../../assets/pizzaArray.json";
 import PizzaBlock from "../../components/PizzaBlock";
 import PizzaLoader from "../../components/PizzaLoader";
-import styles from "./Home.module.scss";
 import Sort, { sortList } from "../../components/Sort";
 import Pagination from "../../components/Pagination";
+
+import styles from "./Home.module.scss";
+
 import { setFilters } from "../../redux/slices/filterSlice";
+import { fetchPizzas } from "../../redux/slices/pizzaSlice";
 // сортирвока json server  /pizza?_sort=price_order=desc где _order=desc реверсия списка
 const Home = () => {
   const isSearch = useRef(false);
@@ -20,15 +24,13 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const category = useSelector((state) => state.filter.category);
-  const searchValue = useSelector((state) => state.filter.searchValue);
-  const sortProperty = useSelector((state) => state.filter.sortProperty);
-  const sortDesc = useSelector((state) => state.filter.sortDesc);
+  const { category, searchValue, sortProperty, sortDesc } = useSelector(
+    (state) => state.filter
+  );
+  const items = useSelector((state) => state.pizza.items);
 
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
-  const [pizzaArray, setPizzaArray] = useState([]);
-  const [pizzaArrayToRender, setPizzaArrayToRender] = useState([]);
 
   const endOffset = itemOffset + itemsPerPage;
   const delay = (ms) => {
@@ -37,20 +39,29 @@ const Home = () => {
     });
   };
 
-  const fetchPizza = async () => {
+  const getPizzas = async () => {
     try {
-      setPizzaArray([...new Array(10)]);
+      //[...new Array(10)]
       await delay(200);
 
-      const pizzaResponse = await axios.get(
-        `http://localhost:3020/pizza?_sort=${sortProperty.property}${
-          sortDesc ? "&_order=desc" : ""
-        }${searchValue ? "&q=" + searchValue : ""}${
-          category > 0 ? "&category=" + category : ""
-        }`
+      // const pizzaResponse = await axios.get(
+      //   `http://localhost:3020/pizza?_sort=${sortProperty.property}${
+      //     sortDesc ? "&_order=desc" : ""
+      //   }${searchValue ? "&q=" + searchValue : ""}${
+      //     category > 0 ? "&category=" + category : ""
+      //   }`
+      // );
+      dispatch(
+        fetchPizzas({
+          sortProperty,
+          sortDesc,
+          searchValue,
+          category,
+          itemsPerPage,
+          itemOffset,
+        })
       );
-      await setPizzaArray(pizzaResponse.data);
-      setPizzaArrayToRender(pizzaResponse.data.slice(itemOffset, endOffset));
+      window.scrollTo(0, 0);
     } catch {
       console.error();
     }
@@ -87,10 +98,10 @@ const Home = () => {
       setItemsPerPage(4);
     }
     if (!window.location.search) {
-      fetchPizza();
+      getPizzas();
     }
     if (!isSearch.current) {
-      fetchPizza();
+      getPizzas();
     }
     isSearch.current = false;
   }, [category, sortProperty, sortDesc, searchValue, endOffset, itemOffset]);
@@ -102,7 +113,7 @@ const Home = () => {
       </div>
       <h2 className={styles.title}>Все пиццы</h2>
       <div ref={itemsWrapper} className={styles.items}>
-        {pizzaArrayToRender.map((obj, index) =>
+        {items.map((obj, index) =>
           obj ? (
             <PizzaBlock {...obj} key={obj.id} />
           ) : (
@@ -111,7 +122,9 @@ const Home = () => {
         )}
       </div>
       <Pagination
-        items={pizzaArray}
+        searchValue={searchValue}
+        category={category}
+        items={items}
         itemsPerPage={itemsPerPage}
         itemOffset={itemOffset}
         setItemOffset={(obj) => setItemOffset(obj)}

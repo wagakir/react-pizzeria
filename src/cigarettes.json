@@ -58,7 +58,49 @@
       "sizes": ["ssl"]
     }
   ],
-  "k&g": [],
+  "k&g": [
+    {
+      "name": "blooming",
+      "type": [
+        { "name": "violet on", "resin": 6, "nicotine": 0.4, "taste": "ягоды" },
+        { "name": "gold", "resin": 5, "nicotine": 0.4 },
+        { "name": "silver", "resin": 1, "nicotine": 0.1 },
+        { "name": "blue", "resin": 3, "nicotine": 0.3 }
+      ]
+    },
+    {
+      "name": "bohem",
+      "type": [
+        {
+          "name": "cavana demi",
+          "resin": 8,
+          "nicotine": 0.6,
+          "taste": "фильтр персиковое вино, капсула манго"
+        },
+        { "name": "mini aroma", "resin": 4, "nicotine": 0.4, "taste": "вишня" },
+        { "name": "mini blend", "resin": 4, "nicotine": 0.4 },
+        { "name": "libre", "resin": 7, "nicotine": 0.6, "taste": "вишня" },
+        {
+          "name": "libre brown",
+          "resin": 7,
+          "nicotine": 0.6,
+          "taste": "шоколад"
+        }
+      ]
+    },
+    {
+      "name": "raison",
+      "type": [
+        {
+          "name": "french black",
+          "resin": 4,
+          "nicotine": 0.3,
+          "taste": "глинтвейн"
+        },
+        { "name": "presso", "resin": 6, "nicotine": 0.5, "taste": "кофе" }
+      ]
+    }
+  ],
   "gti": [],
   "ve": [],
   "itg": {

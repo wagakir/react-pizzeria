@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Pagination.module.scss";
 import ReactPaginate from "react-paginate";
-
-const Pagination = ({
-  items,
-  itemsPerPage,
-  itemOffset,
-  setItemOffset,
-  endOffset,
-}) => {
+import axios from "axios";
+import { useSelector } from "react-redux";
+const Pagination = ({ itemsPerPage, itemOffset, setItemOffset, endOffset }) => {
+  const [pizzaArray, setPizzaArray] = useState([]);
+  const { category, searchValue } = useSelector((state) => state.filter);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3020/pizza?${searchValue ? "&q=" + searchValue : ""}${
+          category > 0 ? "&category=" + category : ""
+        }`
+      )
+      .then((res) => setPizzaArray(res.data));
+  }, [searchValue, category]);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
 
@@ -18,16 +24,17 @@ const Pagination = ({
 
   // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
 
-  const pageCount = Math.ceil(items.length / itemsPerPage);
-
+  const pageCount = Math.ceil(pizzaArray.length / itemsPerPage);
+  // const pageCount = 3;
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % pizzaArray.length;
     // console.log(
     //   `User requested page number ${event.selected}, which is offset ${newOffset}`
     // );
     setItemOffset(newOffset);
   };
+
   return (
     <>
       {pageCount > 1 ? (
