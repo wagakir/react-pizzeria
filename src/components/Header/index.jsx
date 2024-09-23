@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import Seacrh from "../Search";
 import { useSelector } from "react-redux";
+
 const Header = () => {
   const { items, totalPrice } = useSelector((state) => state.cart);
   // let totalCount = 0;

@@ -15,7 +15,7 @@ const PizzaBlock = ({
   typesNames,
 }) => {
   // const sizeTypes = [26, 30, 40];
-  const typesTest = [" тонкое", "традицион  ное"];
+  const typesTest = [" тонкое", "традиционное"];
   const onClickAdd = () => {
     const item = {
       id,

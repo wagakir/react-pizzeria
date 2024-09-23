@@ -24,6 +24,7 @@ const Seacrh = () => {
 
   const clickEarse = () => {
     // setSearchValue("");
+    setValue("");
     dispatch(setSearchValue(""));
     inputRef.current.focus();
   };

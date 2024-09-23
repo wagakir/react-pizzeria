@@ -13,6 +13,12 @@ export const fetchPizzas = createAsyncThunk(
       itemOffset,
     } = params;
     const page = itemOffset / itemsPerPage + 1;
+    const delay = (ms) => {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(), ms);
+      });
+    };
+    await delay(600);
     const { data } = await axios.get(
       `http://localhost:3020/pizza?_sort=${sortProperty.property}${
         sortDesc ? "&_order=desc" : ""
@@ -39,9 +45,17 @@ export const pizzaSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(fetchPizzas.pending, (state, action) => {
+      state.status = "loading";
+      state.items = [...new Array(10)];
+    });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-      // Add user to the state array
       state.items = action.payload;
+      state.status = "success";
+    });
+    builder.addCase(fetchPizzas.rejected, (state, action) => {
+      state.status = "error";
+      state.items = [];
     });
   },
 });

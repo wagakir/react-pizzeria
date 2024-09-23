@@ -15,6 +15,7 @@ import styles from "./Home.module.scss";
 
 import { setFilters } from "../../redux/slices/filterSlice";
 import { fetchPizzas } from "../../redux/slices/pizzaSlice";
+import MessageWindow from "../../components/MessageWindow";
 // сортирвока json server  /pizza?_sort=price_order=desc где _order=desc реверсия списка
 const Home = () => {
   const isSearch = useRef(false);
@@ -27,44 +28,33 @@ const Home = () => {
   const { category, searchValue, sortProperty, sortDesc } = useSelector(
     (state) => state.filter
   );
-  const items = useSelector((state) => state.pizza.items);
+  const { items, status } = useSelector((state) => state.pizza);
 
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
 
   const endOffset = itemOffset + itemsPerPage;
-  const delay = (ms) => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), ms);
-    });
-  };
 
   const getPizzas = async () => {
-    try {
-      //[...new Array(10)]
-      await delay(200);
+    // const pizzaResponse = await axios.get(
+    //   `http://localhost:3020/pizza?_sort=${sortProperty.property}${
+    //     sortDesc ? "&_order=desc" : ""
+    //   }${searchValue ? "&q=" + searchValue : ""}${
+    //     category > 0 ? "&category=" + category : ""
+    //   }`
+    // );
+    dispatch(
+      fetchPizzas({
+        sortProperty,
+        sortDesc,
+        searchValue,
+        category,
+        itemsPerPage,
+        itemOffset,
+      })
+    );
 
-      // const pizzaResponse = await axios.get(
-      //   `http://localhost:3020/pizza?_sort=${sortProperty.property}${
-      //     sortDesc ? "&_order=desc" : ""
-      //   }${searchValue ? "&q=" + searchValue : ""}${
-      //     category > 0 ? "&category=" + category : ""
-      //   }`
-      // );
-      dispatch(
-        fetchPizzas({
-          sortProperty,
-          sortDesc,
-          searchValue,
-          category,
-          itemsPerPage,
-          itemOffset,
-        })
-      );
-      window.scrollTo(0, 0);
-    } catch {
-      console.error();
-    }
+    window.scrollTo(0, 0);
   };
   // проверяем параметры адресной строки
   useEffect(() => {
@@ -112,24 +102,34 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className={styles.title}>Все пиццы</h2>
-      <div ref={itemsWrapper} className={styles.items}>
-        {items.map((obj, index) =>
-          obj ? (
-            <PizzaBlock {...obj} key={obj.id} />
-          ) : (
-            <PizzaLoader key={index} />
-          )
-        )}
-      </div>
-      <Pagination
-        searchValue={searchValue}
-        category={category}
-        items={items}
-        itemsPerPage={itemsPerPage}
-        itemOffset={itemOffset}
-        setItemOffset={(obj) => setItemOffset(obj)}
-        endOffset={endOffset}
-      />
+      {status === "error" ? (
+        <MessageWindow
+          title1="Ошибка при загрузке пицц"
+          title2="перезагрузите страницу позднее, ведутся технические работы "
+        />
+      ) : (
+        // :  items?.length === 0 ? (
+        //   <MessageWindow title1="Пицц не найдено" title2="" />
+        // )
+        <>
+          <div ref={itemsWrapper} className={styles.items}>
+            {status === "loading"
+              ? [...new Array(10)].map((obj, index) => (
+                  <PizzaLoader key={index} />
+                ))
+              : items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
+          </div>
+          <Pagination
+            searchValue={searchValue}
+            category={category}
+            items={items}
+            itemsPerPage={itemsPerPage}
+            itemOffset={itemOffset}
+            setItemOffset={(obj) => setItemOffset(obj)}
+            endOffset={endOffset}
+          />
+        </>
+      )}
     </div>
   );
 };
