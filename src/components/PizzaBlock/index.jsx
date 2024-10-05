@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./PizzaBlock.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const PizzaBlock = ({
   id,
@@ -20,7 +21,7 @@ const PizzaBlock = ({
     const item = {
       id,
       title,
-      price,
+      price: price + activeIndexSize * 200,
       imageUrl,
       type: typesTest[activeIndexType],
       size: sizes[activeIndexSize],
@@ -37,7 +38,10 @@ const PizzaBlock = ({
   const addedCount = cartItem ? cartItem.count : 0;
   return (
     <div className={styles.pizza}>
-      <img src={imageUrl} alt="Pizza" />
+      <Link to={"/pizza/" + id}>
+        <img src={imageUrl} alt="Pizza" />
+      </Link>
+
       <h4 className={styles.title}>{title}</h4>
       <div className={styles.selector}>
         <ul>
@@ -64,7 +68,7 @@ const PizzaBlock = ({
         </ul>
       </div>
       <div className={styles.bottom}>
-        <div className={styles.price}>от {price} ₽</div>
+        <div className={styles.price}>от {price + activeIndexSize * 200} ₽</div>
         <div className="button outline add" onClick={() => onClickAdd()}>
           <svg
             width="12"

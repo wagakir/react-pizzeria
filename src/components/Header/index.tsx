@@ -5,10 +5,15 @@ import Seacrh from "../Search";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  // const { items, totalPrice } = useSelector((state) => state.cart);
+  const totalPrice = 4;
+  const items = [{ count: 3 }];
   // let totalCount = 0;
   // if (items) {
-  const totalCount = items.reduce((sum, obj) => sum + obj.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, obj: { count: number }) => sum + obj.count,
+    0
+  );
   // }else()
   return (
     <header className={styles.header}>
