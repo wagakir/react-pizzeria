@@ -10,14 +10,14 @@ export const categoriesArray = [
   "Острые",
   "Закрытые",
 ];
-const Categories = () => {
+const Categories: React.FC = () => {
   const dispatch = useDispatch();
 
   // const onClickCategory = (num) => {
   // //   dispatch(setActiveCategory(num));
   // // };
 
-  const category = useSelector((state) => state.filter.category);
+  const category: any = useSelector((state: any) => state.filter.category);
 
   // const category = useSelector((state) => state.filter.category);
   // console.log(category);

@@ -13,19 +13,19 @@ export const sortList: sortItem[] = [
 ];
 const Sort = () => {
   const [openSort, setOpenSort] = React.useState(false);
-  const sortRef = React.useRef(null);
+  const sortRef = React.useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
-  const sortDesc: any = useSelector((state: any) => state.filter.sortDesc);
-  const sortProperty = useSelector<RootState>(
+  const sortDesc = useSelector<any>((state) => state.filter.sortDesc);
+  const sortProperty: any = useSelector<any>(
     (state) => state.filter.sortProperty
   );
-  const onClickSort = (index) => {
+  const onClickSort = (index: number) => {
     setOpenSort((val) => !val);
     dispatch(setSortProperty(sortList[index]));
   };
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!sortRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpenSort(false);
       }
     };
@@ -40,8 +40,8 @@ const Sort = () => {
         <svg
           className={sortDesc ? styles.rotate : ""}
           onClick={() => dispatch(setSortDesc())}
-          width="10"
-          height="6"
+          width="15"
+          height="9"
           viewBox="0 0 10 6"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

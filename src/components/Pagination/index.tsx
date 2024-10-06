@@ -3,9 +3,22 @@ import styles from "./Pagination.module.scss";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { useSelector } from "react-redux";
-const Pagination = ({ itemsPerPage, itemOffset, setItemOffset, endOffset }) => {
+type PaginationProps = {
+  itemsPerPage: number;
+  itemOffset: number;
+  setItemOffset: (newOffset: number) => void;
+  endOffset: number;
+};
+const Pagination: React.FC<PaginationProps> = ({
+  itemsPerPage,
+  itemOffset,
+  setItemOffset,
+  endOffset,
+}) => {
   const [pizzaArray, setPizzaArray] = useState([]);
-  const { category, searchValue } = useSelector((state) => state.filter);
+  const { category, searchValue }: any = useSelector(
+    (state: any) => state.filter
+  );
   useEffect(() => {
     axios
       .get(
@@ -27,7 +40,7 @@ const Pagination = ({ itemsPerPage, itemOffset, setItemOffset, endOffset }) => {
   const pageCount = Math.ceil(pizzaArray.length / itemsPerPage);
   // const pageCount = 3;
   // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
+  const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % pizzaArray.length;
     // console.log(
     //   `User requested page number ${event.selected}, which is offset ${newOffset}`

@@ -6,8 +6,8 @@ import debounce from "lodash.debounce";
 
 const Seacrh = () => {
   const [value, setValue] = React.useState("");
-  const rootRef = React.useRef(null);
-  const inputRef = React.useRef(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   // const searchValue = useSelector((state) => state.filter.searchValue);
   const dispatch = useDispatch();
   const updateSearchValue = React.useCallback(
@@ -17,7 +17,7 @@ const Seacrh = () => {
     }, 1000),
     []
   );
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -26,7 +26,7 @@ const Seacrh = () => {
     // setSearchValue("");
     setValue("");
     dispatch(setSearchValue(""));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
   // <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
   return (
@@ -47,11 +47,17 @@ const Seacrh = () => {
         onChange={(event) => onChangeInput(event)}
         value={value}
         placeholder="Поиск пицц ..."
-        onFocus={() =>
-          (rootRef.current.style = "border: 2px solid rgba(0, 0, 0, 0.6);")
-        }
+        onFocus={() => {
+          rootRef.current?.setAttribute(
+            "style",
+            "border: 2px solid rgba(0, 0, 0, 0.6);"
+          );
+        }}
         onBlur={() =>
-          (rootRef.current.style = "border: 2px solid rgba(0, 0, 0, 0.2);")
+          rootRef.current?.setAttribute(
+            "style",
+            "border: 2px solid rgba(0, 0, 0, 0.2);"
+          )
         }
       />
       {value && (

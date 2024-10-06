@@ -1,6 +1,13 @@
 import React from "react";
 import styles from "./MessageWindow.module.scss";
-const MessageWindow = ({ title1, title2 }) => {
+
+const MessageWindow = ({
+  title1,
+  title2,
+}: {
+  title1: string | undefined;
+  title2: string | undefined;
+}) => {
   return (
     <div className={styles.wrapper}>
       <h1>{title1}</h1>

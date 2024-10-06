@@ -37,35 +37,42 @@ const FullPizza: React.FC = () => {
         <div className={styles.root}>
           <div>
             <img src={pizza.imageUrl} height={240} width={240} alt="Pizza" />
-            <h2>{pizza.title}</h2>
-          </div>
-          <div>
-            <div className={styles.selector}>
-              <ul>
-                {pizza.types.map((type: string, index: number) => (
-                  <li
-                    key={index}
-                    className={activeIndexType === index ? styles.active : ""}
-                    onClick={() => setActiveIndexType(index)}
-                  >
-                    {type}
-                  </li>
-                ))}
-              </ul>
-              <ul>
-                {pizza.sizes.map((size, index) => (
-                  <li
-                    key={index}
-                    className={activeIndexSize === index ? styles.active : ""}
-                    onClick={() => setActiveIndexSize(index)}
-                  >
-                    {size} см.
-                  </li>
-                ))}
-              </ul>
+            <div>
+              <h2>{pizza.title}</h2>
+              <span>{pizza.price + activeIndexSize * 200} ₽</span>
+              <div>
+                <div className={styles.selector}>
+                  <ul>
+                    {pizza.types.map((type: string, index: number) => (
+                      <li
+                        key={index}
+                        className={
+                          activeIndexType === index ? styles.active : ""
+                        }
+                        onClick={() => setActiveIndexType(index)}
+                      >
+                        {type}
+                      </li>
+                    ))}
+                  </ul>
+                  <ul>
+                    {pizza.sizes.map((size, index) => (
+                      <li
+                        key={index}
+                        className={
+                          activeIndexSize === index ? styles.active : ""
+                        }
+                        onClick={() => setActiveIndexSize(index)}
+                      >
+                        {size} см.
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
-            <span>{pizza.price + activeIndexSize * 200} ₽</span>
           </div>
+
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente,
             velit. Possimus nisi libero aliquam, quas cupiditate magnam quaerat

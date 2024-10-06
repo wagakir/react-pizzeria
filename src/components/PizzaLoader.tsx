@@ -1,7 +1,7 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 import styles from "./PizzaBlock/PizzaBlock.module.scss";
-const PizzaLoader = (props) => (
+const PizzaLoader: React.FC = () => (
   <ContentLoader
     className={styles.pizza}
     speed={2}
@@ -10,7 +10,6 @@ const PizzaLoader = (props) => (
     viewBox="0 0 280 465"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
-    {...props}
   >
     <rect x="10" y="428" rx="3" ry="3" width="88" height="25" />
     <rect x="10" y="270" rx="3" ry="3" width="260" height="30" />

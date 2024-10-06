@@ -4,10 +4,22 @@ import styles from "./Cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { clearItems } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
-const Cart = (props) => {
+type CartItemProps = {
+  count: number;
+  price: number;
+  title: string;
+  imageUrl: string;
+  type: string;
+  size: number;
+  id: number;
+};
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const { items, totalPrice } = useSelector((state) => state.cart);
-  const totalCount = items.reduce((sum, obj) => sum + obj.count, 0);
+  const { items, totalPrice }: any = useSelector((state: any) => state.cart);
+  const totalCount = items.reduce(
+    (sum: number, obj: { count: number }) => sum + obj.count,
+    0
+  );
   if (!totalPrice) {
     return (
       <>
@@ -104,7 +116,7 @@ const Cart = (props) => {
           </div>
         </div>
         <div>
-          {items.map((obj, index) => (
+          {items.map((obj: CartItemProps, index: number) => (
             <CartItem {...obj} key={index} />
           ))}
         </div>

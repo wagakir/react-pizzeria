@@ -3,8 +3,17 @@ import styles from "./PizzaBlock.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
-
-const PizzaBlock = ({
+type PizzaBlockProps = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: string;
+  rating: number;
+};
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
   id,
   imageUrl,
   title,
@@ -13,7 +22,6 @@ const PizzaBlock = ({
   price,
   category,
   rating,
-  typesNames,
 }) => {
   // const sizeTypes = [26, 30, 40];
   const typesTest = [" тонкое", "традиционное"];
@@ -28,8 +36,8 @@ const PizzaBlock = ({
     };
     dispatch(addItem(item));
   };
-  const cartItem = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
+  const cartItem: any = useSelector<any>((state) =>
+    state.cart.items.find((obj: any) => obj.id === id)
   );
   const dispatch = useDispatch();
   const [activeIndexSize, setActiveIndexSize] = React.useState(0);

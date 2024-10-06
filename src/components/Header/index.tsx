@@ -5,9 +5,8 @@ import Seacrh from "../Search";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  // const { items, totalPrice } = useSelector((state) => state.cart);
-  const totalPrice = 4;
-  const items = [{ count: 3 }];
+  const { items, totalPrice } = useSelector((state: any) => state.cart);
+
   // let totalCount = 0;
   // if (items) {
   const totalCount = items.reduce(

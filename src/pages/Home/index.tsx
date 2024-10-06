@@ -16,19 +16,39 @@ import styles from "./Home.module.scss";
 import { setFilters } from "../../redux/slices/filterSlice";
 import { fetchPizzas } from "../../redux/slices/pizzaSlice";
 import MessageWindow from "../../components/MessageWindow";
+import { RootState } from "../../redux/store";
+
 // сортирвока json server  /pizza?_sort=price_order=desc где _order=desc реверсия списка
+type PizzaBlockProps = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: string;
+  rating: number;
+};
 const Home = () => {
   const isSearch = useRef(false);
-  const itemsWrapper = useRef(null);
+  const itemsWrapper = useRef<HTMLDivElement>(null);
   const isMounted = useRef(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { category, searchValue, sortProperty, sortDesc } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizza);
+  const {
+    category,
+    searchValue,
+    sortProperty,
+    sortDesc,
+  }: {
+    category: number;
+    searchValue: string;
+    sortProperty: { name: string; property: string };
+    sortDesc: Boolean;
+  } = useSelector((state: RootState) => state.filter);
+  const { items, status }: any = useSelector((state: any) => state.pizza);
 
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -43,7 +63,9 @@ const Home = () => {
     //     category > 0 ? "&category=" + category : ""
     //   }`
     // );
+
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         sortProperty,
         sortDesc,
@@ -80,9 +102,9 @@ const Home = () => {
   // отравляем запрос на получение  массива пицц и сохраняем его в стейт
   useEffect(() => {
     //измеряем размер окна и считаем сколько пицц рендерить чтоб была одна строка
-    if (Math.floor(Number(itemsWrapper.current.offsetWidth) / 280) > 3) {
+    if (Math.floor(Number(itemsWrapper.current?.offsetWidth) / 280) > 3) {
       setItemsPerPage(
-        Math.floor(Number(itemsWrapper.current.offsetWidth) / 280)
+        Math.floor(Number(itemsWrapper.current?.offsetWidth) / 280)
       );
     } else {
       setItemsPerPage(4);
@@ -117,15 +139,15 @@ const Home = () => {
               ? [...new Array(10)].map((obj, index) => (
                   <PizzaLoader key={index} />
                 ))
-              : items.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
+              : items.map((obj: PizzaBlockProps) => (
+                  <PizzaBlock {...obj} key={obj.id} />
+                ))}
           </div>
+
           <Pagination
-            searchValue={searchValue}
-            category={category}
-            items={items}
             itemsPerPage={itemsPerPage}
             itemOffset={itemOffset}
-            setItemOffset={(obj) => setItemOffset(obj)}
+            setItemOffset={(obj: number) => setItemOffset(obj)}
             endOffset={endOffset}
           />
         </>
