@@ -48,7 +48,7 @@ const Home = () => {
     sortProperty: { name: string; property: string };
     sortDesc: Boolean;
   } = useSelector((state: RootState) => state.filter);
-  const { items, status }: any = useSelector((state: any) => state.pizza);
+  const { items, status } = useSelector((state: RootState) => state.pizza);
 
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -135,13 +135,13 @@ const Home = () => {
         // )
         <>
           <div ref={itemsWrapper} className={styles.items}>
-            {status === "loading"
+            {status === "loading" && items[0] !== null
               ? [...new Array(10)].map((obj, index) => (
                   <PizzaLoader key={index} />
                 ))
-              : items.map((obj: PizzaBlockProps) => (
-                  <PizzaBlock {...obj} key={obj.id} />
-                ))}
+              : items.map(
+                  (obj) => obj && <PizzaBlock {...obj} key={obj?.id} />
+                )}
           </div>
 
           <Pagination

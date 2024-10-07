@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Categories.module.scss";
 import { setCategory } from "../../redux/slices/filterSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
 export const categoriesArray = [
   "Все",
   "Мясные",
@@ -17,7 +18,7 @@ const Categories: React.FC = () => {
   // //   dispatch(setActiveCategory(num));
   // // };
 
-  const category: any = useSelector((state: any) => state.filter.category);
+  const category = useSelector((state: RootState) => state.filter.category);
 
   // const category = useSelector((state) => state.filter.category);
   // console.log(category);

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Sort.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortProperty, setSortDesc } from "../../redux/slices/filterSlice";
+import { RootState } from "../../redux/store";
 type sortItem = {
   name: string;
   property: string;
@@ -15,9 +16,9 @@ const Sort = () => {
   const [openSort, setOpenSort] = React.useState(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
-  const sortDesc = useSelector<any>((state) => state.filter.sortDesc);
-  const sortProperty: any = useSelector<any>(
-    (state) => state.filter.sortProperty
+  const sortDesc = useSelector((state: RootState) => state.filter.sortDesc);
+  const sortProperty = useSelector(
+    (state: RootState) => state.filter.sortProperty
   );
   const onClickSort = (index: number) => {
     setOpenSort((val) => !val);
@@ -59,13 +60,13 @@ const Sort = () => {
       {openSort && (
         <div className={styles.popup}>
           <ul>
-            {sortList.map((title, index) => (
+            {sortList.map((obj, index) => (
               <li
                 key={index}
-                className={sortProperty === index ? "active" : ""}
+                className={sortProperty === obj ? styles.active : ""}
                 onClick={() => onClickSort(index)}
               >
-                {title.name}
+                {obj.name}
               </li>
             ))}
           </ul>

@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import Seacrh from "../Search";
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Header = () => {
-  const { items, totalPrice } = useSelector((state: any) => state.cart);
+  const { items, totalPrice } = useSelector((state: RootState) => state.cart);
 
   // let totalCount = 0;
   // if (items) {

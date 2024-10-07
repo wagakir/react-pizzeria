@@ -4,6 +4,7 @@ import styles from "./Cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { clearItems } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
+import { RootState } from "../../redux/store";
 type CartItemProps = {
   count: number;
   price: number;
@@ -15,7 +16,7 @@ type CartItemProps = {
 };
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const { items, totalPrice }: any = useSelector((state: any) => state.cart);
+  const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   const totalCount = items.reduce(
     (sum: number, obj: { count: number }) => sum + obj.count,
     0

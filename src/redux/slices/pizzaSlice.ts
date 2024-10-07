@@ -1,9 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+type PizzaBlock = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: string;
+  rating: number;
+};
+interface Params {
+  sortProperty: { property: string };
+  sortDesc: Boolean;
+  searchValue: string;
+  category: number;
+  itemsPerPage: number;
+  itemOffset: number;
+}
 export const fetchPizzas = createAsyncThunk(
   "users/fetchPizzasStatus",
-  async (params, thunkAPI) => {
+  async (params: Params) => {
     const {
       sortProperty,
       sortDesc,
@@ -13,9 +30,9 @@ export const fetchPizzas = createAsyncThunk(
       itemOffset,
     } = params;
     const page = itemOffset / itemsPerPage + 1;
-    const delay = (ms) => {
+    const delay = (ms: number) => {
       return new Promise((resolve) => {
-        setTimeout(() => resolve(), ms);
+        setTimeout(() => resolve(undefined), ms);
       });
     };
     await delay(600);
@@ -30,8 +47,11 @@ export const fetchPizzas = createAsyncThunk(
   }
 );
 
-const initialState = {
-  items: [],
+const initialState: {
+  items: PizzaBlock[] | null[];
+  status: "loading" | "success" | "error";
+} = {
+  items: [null],
   status: "loading",
 };
 
@@ -47,6 +67,7 @@ export const pizzaSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchPizzas.pending, (state, action) => {
       state.status = "loading";
+
       state.items = [...new Array(10)];
     });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {

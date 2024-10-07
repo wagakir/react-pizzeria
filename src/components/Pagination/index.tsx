@@ -3,6 +3,7 @@ import styles from "./Pagination.module.scss";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 type PaginationProps = {
   itemsPerPage: number;
   itemOffset: number;
@@ -16,8 +17,8 @@ const Pagination: React.FC<PaginationProps> = ({
   endOffset,
 }) => {
   const [pizzaArray, setPizzaArray] = useState([]);
-  const { category, searchValue }: any = useSelector(
-    (state: any) => state.filter
+  const { category, searchValue } = useSelector(
+    (state: RootState) => state.filter
   );
   useEffect(() => {
     axios
