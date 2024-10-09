@@ -7,7 +7,15 @@ import { RootState } from "../../redux/store";
 
 const Header = () => {
   const { items, totalPrice } = useSelector((state: RootState) => state.cart);
-
+  const isMounted = React.useRef(false);
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem("cart", json);
+      console.log(json);
+    }
+    isMounted.current = true;
+  }, [items]);
   // let totalCount = 0;
   // if (items) {
   const totalCount = items.reduce(
