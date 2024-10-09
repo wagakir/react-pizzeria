@@ -3,11 +3,11 @@ import styles from "./Sort.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortProperty, setSortDesc } from "../../redux/slices/filterSlice";
 import { RootState } from "../../redux/store";
-type sortItem = {
+export type SortItem = {
   name: string;
   property: string;
 };
-export const sortList: sortItem[] = [
+export const sortList: SortItem[] = [
   { name: "популярности", property: "rating" },
   { name: "цене", property: "price" },
   { name: "алфавиту", property: "title" },

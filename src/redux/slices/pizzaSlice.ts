@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 type PizzaBlock = {
   id: number;
@@ -36,14 +36,14 @@ export const fetchPizzas = createAsyncThunk(
       });
     };
     await delay(600);
-    const { data } = await axios.get(
+    const { data } = await axios.get<PizzaBlock[]>(
       `http://localhost:3020/pizza?_sort=${sortProperty.property}${
         sortDesc ? "&_order=desc" : ""
       }${searchValue ? "&q=" + searchValue : ""}${
         category > 0 ? "&category=" + category : ""
       }${"&_page=" + page + "&_limit=" + itemsPerPage}`
     );
-    return data;
+    return data as PizzaBlock[];
   }
 );
 
@@ -59,22 +59,25 @@ export const pizzaSlice = createSlice({
   name: "pizza",
   initialState,
   reducers: {
-    setItems: (state, action) => {
+    setItems: (state, action: PayloadAction<PizzaBlock[] | null[]>) => {
       state.items = action.payload;
     },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(fetchPizzas.pending, (state, action) => {
+    builder.addCase(fetchPizzas.pending, (state) => {
       state.status = "loading";
 
       state.items = [...new Array(10)];
     });
-    builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-      state.items = action.payload;
-      state.status = "success";
-    });
-    builder.addCase(fetchPizzas.rejected, (state, action) => {
+    builder.addCase(
+      fetchPizzas.fulfilled,
+      (state, action: PayloadAction<PizzaBlock[] | null[]>) => {
+        state.items = action.payload;
+        state.status = "success";
+      }
+    );
+    builder.addCase(fetchPizzas.rejected, (state) => {
       state.status = "error";
       state.items = [];
     });

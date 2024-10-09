@@ -1,6 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SortItem } from "../../components/Sort";
 
-const initialState = {
+interface InitialState {
+  searchValue: string;
+  category: number;
+  sortProperty: SortItem;
+  sortDesc: boolean;
+}
+const initialState: InitialState = {
   searchValue: "",
   category: 0,
   sortProperty: { name: "цене", property: "price" },
@@ -11,22 +18,31 @@ export const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setSearchValue: (state, action) => {
+    setSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
-    setCategory: (state, action) => {
+    setCategory: (state, action: PayloadAction<number>) => {
       state.category = action.payload;
     },
-    setSortProperty: (state, action) => {
+    setSortProperty: (state, action: PayloadAction<SortItem>) => {
       state.sortProperty = action.payload;
     },
     setSortDesc: (state) => {
       state.sortDesc = !state.sortDesc;
     },
-    setFilters: (state, action) => {
+    setFilters: (
+      state,
+      action: PayloadAction<{
+        category: number;
+        sortProperty: SortItem | undefined;
+        sortDesc: boolean;
+      }>
+    ) => {
       // state.searchValue = action.payload.searchValue;
       state.category = action.payload.category;
-      state.sortProperty = action.payload.sortProperty;
+      if (action.payload.sortProperty) {
+        state.sortProperty = action.payload.sortProperty;
+      }
       state.sortDesc = action.payload.sortDesc;
     },
   },

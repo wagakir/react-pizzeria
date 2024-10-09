@@ -26,7 +26,7 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
   const dispatch = useDispatch();
   const onClickPlus = () => {
-    dispatch(addItem({ id }));
+    dispatch(addItem({ count, price, title, imageUrl, type, size, id }));
   };
   const onClickMinus = () => {
     dispatch(incrementItem({ id }));

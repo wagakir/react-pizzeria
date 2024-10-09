@@ -17,24 +17,25 @@ import { setFilters } from "../../redux/slices/filterSlice";
 import { fetchPizzas } from "../../redux/slices/pizzaSlice";
 import MessageWindow from "../../components/MessageWindow";
 import { RootState } from "../../redux/store";
+import { useAppDispatch } from "../../redux/hooks";
 
 // сортирвока json server  /pizza?_sort=price_order=desc где _order=desc реверсия списка
-type PizzaBlockProps = {
-  id: number;
-  imageUrl: string;
-  title: string;
-  types: number[];
-  sizes: number[];
-  price: number;
-  category: string;
-  rating: number;
-};
+// type PizzaBlockProps = {
+//   id: number;
+//   imageUrl: string;
+//   title: string;
+//   types: number[];
+//   sizes: number[];
+//   price: number;
+//   category: string;
+//   rating: number;
+// };
 const Home = () => {
   const isSearch = useRef(false);
   const itemsWrapper = useRef<HTMLDivElement>(null);
   const isMounted = useRef(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const {
@@ -82,8 +83,28 @@ const Home = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
+      console.log(params);
       const sortProperty = sortList.find((obj) => obj.property === params.sort);
-      dispatch(setFilters({ sortProperty, ...params }));
+      console.log(sortProperty);
+      if (params.sortDesc === "true") {
+        dispatch(
+          setFilters({
+            sortProperty,
+            category: 0,
+            ...params,
+            sortDesc: true,
+          })
+        );
+      } else {
+        dispatch(
+          setFilters({
+            sortProperty,
+            category: 0,
+            ...params,
+            sortDesc: false,
+          })
+        );
+      }
     }
     isSearch.current = true;
   }, []);
