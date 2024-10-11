@@ -1,5 +1,6 @@
 {
   "name": "react-pizzeria",
+  "homepage": "https://wagakir.github.io/react-pizzeria/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,6 +15,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.7",
+    "gh-pages": "^6.2.0",
     "json-server": "^0.17.0",
     "lodash.debounce": "^4.0.8",
     "qs": "^6.13.0",
@@ -32,7 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server -w db.json -p 3020"
+    "server": "json-server -w db.json -p 3020",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

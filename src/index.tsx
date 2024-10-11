@@ -8,7 +8,7 @@ const rootElem = document.getElementById("root");
 if (rootElem) {
   const root = ReactDOM.createRoot(rootElem);
   root.render(
-    <BrowserRouter>
+    <BrowserRouter basename="/react-pizzeria/">
       <Provider store={store}>
         {/* <React.StrictMode> */}
         <App />
