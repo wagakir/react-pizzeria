@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./PizzaBlock.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
+import { addItem, CartItemType } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 import { RootState } from "../../redux/store";
 type PizzaBlockProps = {
@@ -38,14 +38,20 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
     };
     dispatch(addItem(item));
   };
-  const cartItem = useSelector((state: RootState) =>
-    state.cart.items.find((obj) => obj.id === id)
+  // const cartItem = useSelector((state: RootState) =>
+  //   state.cart.items.find((obj) => obj.id === id)
+  // );
+  const cartItems = useSelector((state: RootState) =>
+    state.cart.items.filter((obj) => obj.id === id)
   );
+
   const dispatch = useDispatch();
   const [activeIndexSize, setActiveIndexSize] = React.useState(0);
 
   const [activeIndexType, setActiveIndexType] = React.useState(0);
-  const addedCount = cartItem ? cartItem.count : 0;
+  const calcCount = (items: CartItemType[]) => {
+    return items.reduce((sum, obj) => obj.count + sum, 0);
+  };
   return (
     <div className={styles.pizza}>
       <Link to={"/pizza/" + id}>
@@ -93,7 +99,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
             />
           </svg>
           <span>Добавить</span>
-          {addedCount > 0 && <i>{addedCount}</i>}
+          {calcCount(cartItems) > 0 && <i>{calcCount(cartItems)}</i>}
         </div>
       </div>
     </div>

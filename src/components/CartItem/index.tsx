@@ -29,10 +29,10 @@ const CartItem: React.FC<CartItemProps> = ({
     dispatch(addItem({ count, price, title, imageUrl, type, size, id }));
   };
   const onClickMinus = () => {
-    dispatch(incrementItem({ id }));
+    dispatch(incrementItem({ count, price, title, imageUrl, type, size, id }));
   };
   const onClickRemove = () => {
-    dispatch(removeItem(id));
+    dispatch(removeItem({ count, price, title, imageUrl, type, size, id }));
   };
   return (
     <div className={styles.item}>
