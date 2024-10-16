@@ -35,13 +35,17 @@ export const fetchPizzas = createAsyncThunk(
         setTimeout(() => resolve(undefined), ms);
       });
     };
+    // https://my-json-server.typicode.com/wagakir/react-pizzeria/pizza
+    //http://localhost:3020/pizza
     await delay(600);
     const { data } = await axios.get<PizzaBlock[]>(
-      `http://localhost:3020/pizza?_sort=${sortProperty.property}${
-        sortDesc ? "&_order=desc" : ""
-      }${searchValue ? "&q=" + searchValue : ""}${
-        category > 0 ? "&category=" + category : ""
-      }${"&_page=" + page + "&_limit=" + itemsPerPage}`
+      `https://my-json-server.typicode.com/wagakir/react-pizzeria/pizza/db?_sort=${
+        sortProperty.property
+      }${sortDesc ? "&_order=desc" : ""}${
+        searchValue ? "&q=" + searchValue : ""
+      }${category > 0 ? "&category=" + category : ""}${
+        "&_page=" + page + "&_limit=" + itemsPerPage
+      }`
     );
     return data as PizzaBlock[];
   }

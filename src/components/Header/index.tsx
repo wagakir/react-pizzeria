@@ -27,7 +27,7 @@ const Header = () => {
     <header className={styles.header}>
       <NavLink to="/">
         <div className={styles.logo}>
-          <img src="/img/pizza-logo.svg" height={50} alt="pizza logo" />
+          <img src="./img/pizza-logo.svg" height={50} alt="pizza logo" />
           <div>
             <h2>React Pizza</h2>
             <h4>самая вкусная пицца во вселенной</h4>

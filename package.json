@@ -3,6 +3,7 @@
   "homepage": "https://wagakir.github.io/react-pizzeria/",
   "version": "0.1.0",
   "private": true,
+  "base": "/react-pizzeria",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -27,7 +28,8 @@
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
     "sass": "^1.77.8",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.95.0"
   },
   "scripts": {
     "start": "react-scripts start",
